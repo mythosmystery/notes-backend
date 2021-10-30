@@ -4,14 +4,16 @@ import { ApolloServer } from 'apollo-server-express';
 import Express from 'express';
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
-import { RegisterResolver } from './resolvers/user/Register';
 import session from 'express-session';
 import connectRedis from 'connect-redis';
 import { redis } from './redis';
 import cors from 'cors';
-import { GetResolver } from './resolvers/user/Get';
-import { LoginResolver } from './resolvers/user/Login';
+import { HelloResolver } from './resolvers/Hello';
+import { GetUserResolver } from './resolvers/user/Get';
 import { MeResolver } from './resolvers/user/Me';
+import { RegisterResolver } from './resolvers/user/Register';
+import { LoginResolver } from './resolvers/user/Login';
+import { WriteResolver } from './resolvers/note/Write';
 
 declare module 'express-session' {
    interface SessionData {
@@ -23,7 +25,13 @@ const main = async () => {
    await createConnection();
 
    const schema = await buildSchema({
-      resolvers: [RegisterResolver, GetResolver, LoginResolver, MeResolver],
+      resolvers: [HelloResolver, GetUserResolver, MeResolver, RegisterResolver, LoginResolver, WriteResolver],
+      authChecker: ({ context: { req } }) => {
+         if (req.session.userId) {
+            return true;
+         }
+         return false;
+      },
    });
 
    const apolloServer = new ApolloServer({

@@ -1,11 +1,12 @@
 import { Field, ID, ObjectType } from 'type-graphql';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Note } from './Note';
 
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
    @Field(() => ID)
-   @PrimaryGeneratedColumn()
+   @PrimaryGeneratedColumn('uuid')
    id: string;
 
    @Field()
@@ -22,4 +23,8 @@ export class User extends BaseEntity {
 
    @Column()
    password: string;
+
+   @Field(() => [Note])
+   @OneToMany(() => Note, note => note.user)
+   notes: Note[];
 }

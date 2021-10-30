@@ -1,15 +1,15 @@
 import { User } from '../../entity/User';
-import { Arg, Query, Resolver, ID } from 'type-graphql';
+import { Arg, Query, Resolver } from 'type-graphql';
 
 @Resolver()
-export class GetResolver {
+export class GetUserResolver {
    @Query(() => [User])
-   async getUsers() {
+   async getUsers(): Promise<User[]> {
       return await User.find({});
    }
 
    @Query(() => User)
-   async getUser(@Arg('id') id: string) {
+   async getUser(@Arg('id') id: string): Promise<User | undefined> {
       return await User.findOne({
          where: { id },
       });
