@@ -1,5 +1,5 @@
 import { Note } from '../../entity/Note';
-import { Arg, Authorized, Field, ID, InputType, Mutation, Resolver } from 'type-graphql';
+import { Arg, Authorized, Field, InputType, Mutation, Resolver } from 'type-graphql';
 
 @InputType()
 class UpdateNoteInput implements Partial<Note> {
