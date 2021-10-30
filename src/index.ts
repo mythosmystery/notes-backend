@@ -88,6 +88,7 @@ const main = async () => {
             httpOnly: true,
             secure: __prod__,
             maxAge: 1000 * 60 * 60 * 24 * 7 * 365,
+            domain: __prod__ ? 'https://hb-notes-backend.herokuapp.com' : undefined,
          },
       })
    );
