@@ -26,7 +26,7 @@ declare module 'express-session' {
 
 const main = async () => {
    if (process.env.NODE_ENV === 'production') {
-      await createConnection({ type: 'postgres', url: process.env.DATABASE_URL });
+      await createConnection({ type: 'postgres', url: process.env.DATABASE_URL, entities: ['dist/entity/*.*'] });
    } else {
       await createConnection();
    }
