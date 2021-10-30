@@ -15,6 +15,8 @@ import { RegisterResolver } from './resolvers/user/Register';
 import { LoginResolver } from './resolvers/user/Login';
 import { WriteResolver } from './resolvers/note/Write';
 import { GetNoteResolver } from './resolvers/note/Get';
+import { UpdateNoteResolver } from './resolvers/note/Update';
+import { DeleteNoteResolver } from './resolvers/note/Delete';
 
 declare module 'express-session' {
    interface SessionData {
@@ -26,7 +28,17 @@ const main = async () => {
    await createConnection();
 
    const schema = await buildSchema({
-      resolvers: [HelloResolver, GetUserResolver, MeResolver, RegisterResolver, LoginResolver, WriteResolver, GetNoteResolver],
+      resolvers: [
+         HelloResolver,
+         GetUserResolver,
+         MeResolver,
+         RegisterResolver,
+         LoginResolver,
+         WriteResolver,
+         GetNoteResolver,
+         UpdateNoteResolver,
+         DeleteNoteResolver,
+      ],
       authChecker: ({ context: { req } }) => {
          if (req.session.userId) {
             return true;
