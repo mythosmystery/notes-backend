@@ -17,6 +17,7 @@ import { WriteResolver } from './resolvers/note/Write';
 import { GetNoteResolver } from './resolvers/note/Get';
 import { UpdateNoteResolver } from './resolvers/note/Update';
 import { DeleteNoteResolver } from './resolvers/note/Delete';
+import { __prod__ } from './consts';
 
 declare module 'express-session' {
    interface SessionData {
@@ -25,7 +26,7 @@ declare module 'express-session' {
 }
 
 const main = async () => {
-   if (process.env.NODE_ENV === 'production') {
+   if (__prod__) {
       await createConnection({
          type: 'postgres',
          url: process.env.DATABASE_URL,
@@ -70,7 +71,7 @@ const main = async () => {
    app.use(
       cors({
          credentials: true,
-         origin: 'http://localhost:3000',
+         origin: __prod__ ? 'https://hb-notes-backend.herokuapp.com' : 'http://localhost:3000',
       })
    );
 
@@ -85,7 +86,7 @@ const main = async () => {
          saveUninitialized: false,
          cookie: {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: __prod__,
             maxAge: 1000 * 60 * 60 * 24 * 7 * 365,
          },
       })
