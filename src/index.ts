@@ -14,6 +14,7 @@ import { MeResolver } from './resolvers/user/Me';
 import { RegisterResolver } from './resolvers/user/Register';
 import { LoginResolver } from './resolvers/user/Login';
 import { WriteResolver } from './resolvers/note/Write';
+import { GetNoteResolver } from './resolvers/note/Get';
 
 declare module 'express-session' {
    interface SessionData {
@@ -25,7 +26,7 @@ const main = async () => {
    await createConnection();
 
    const schema = await buildSchema({
-      resolvers: [HelloResolver, GetUserResolver, MeResolver, RegisterResolver, LoginResolver, WriteResolver],
+      resolvers: [HelloResolver, GetUserResolver, MeResolver, RegisterResolver, LoginResolver, WriteResolver, GetNoteResolver],
       authChecker: ({ context: { req } }) => {
          if (req.session.userId) {
             return true;

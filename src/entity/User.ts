@@ -25,6 +25,6 @@ export class User extends BaseEntity {
    password: string;
 
    @Field(() => [Note])
-   @OneToMany(() => Note, note => note.user)
+   @OneToMany(() => Note, note => note.user, { eager: true })
    notes: Note[];
 }
