@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
 import { ApolloServer } from 'apollo-server-express';
-import Express, { request, response } from 'express';
+import Express, { response } from 'express';
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
 import session from 'express-session';
@@ -81,7 +81,7 @@ const main = async () => {
 
    apolloServer.applyMiddleware({ app });
 
-   app.get('/', (req, res) => {
+   app.get('/', (res: typeof response) => {
       res.send('<h1>home page</h1>');
    });
 
