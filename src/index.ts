@@ -71,7 +71,7 @@ const main = async () => {
    app.use(
       cors({
          credentials: true,
-         origin: __prod__ ? 'https://hb-notes-backend.herokuapp.com' : 'http://localhost:3000',
+         origin: 'http://localhost:3000',
       })
    );
 
@@ -88,7 +88,7 @@ const main = async () => {
             httpOnly: true,
             secure: __prod__,
             maxAge: 1000 * 60 * 60 * 24 * 7 * 365,
-            domain: __prod__ ? 'https://hb-notes-backend.herokuapp.com' : undefined,
+            domain: 'https://hb-notes-backend.herokuapp.com',
          },
       })
    );
