@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
 import { ApolloServer } from 'apollo-server-express';
-import Express from 'express';
+import Express, { request, response } from 'express';
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
 import session from 'express-session';
@@ -80,6 +80,10 @@ const main = async () => {
    );
 
    apolloServer.applyMiddleware({ app });
+
+   app.get('/', (req, res) => {
+      res.send('<h1>home page</h1>');
+   });
 
    app.listen(3001 || process.env.PORT, () => {
       console.log('server started on http://localhost:3001/graphql');
