@@ -84,12 +84,11 @@ const main = async () => {
          secret: 'Aasdhagsdadjasjdasd',
          resave: false,
          saveUninitialized: false,
-         cookie: {
-            httpOnly: true,
-            secure: __prod__,
-            maxAge: 1000 * 60 * 60 * 24 * 7 * 365,
-            domain: 'https://hb-notes-backend.herokuapp.com',
-         },
+         // cookie: {
+         //    httpOnly: true,
+         //    secure: __prod__,
+         //    maxAge: 1000 * 60 * 60 * 24 * 7 * 365,
+         // },
       })
    );
 
