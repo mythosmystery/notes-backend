@@ -77,7 +77,6 @@ const main = async () => {
          }),
          cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-            sameSite: 'none',
             httpOnly: true,
          },
          name: 'qid',
