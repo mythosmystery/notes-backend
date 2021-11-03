@@ -80,7 +80,7 @@ const main = async () => {
             sameSite: 'lax',
             httpOnly: true,
          },
-         name: 'qid',
+         name: 'qookie',
          secret: 'Aasdhagsdadjasjdasd',
          resave: false,
          saveUninitialized: false,
