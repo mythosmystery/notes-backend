@@ -75,10 +75,6 @@ const main = async () => {
             client: redis as any,
             disableTouch: true,
          }),
-         cookie: {
-            maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-            httpOnly: true,
-         },
          name: 'qid',
          secret: 'Aasdhagsdadjasjdasd',
          resave: false,
