@@ -7,7 +7,6 @@ import { createConnection } from 'typeorm';
 import session from 'express-session';
 import connectRedis from 'connect-redis';
 import { redis } from './redis';
-import cors from 'cors';
 import { HelloResolver } from './resolvers/Hello';
 import { GetUserResolver } from './resolvers/user/Get';
 import { MeResolver } from './resolvers/user/Me';
@@ -62,12 +61,6 @@ const main = async () => {
 
    const RedisStore = connectRedis(session);
 
-   app.use(
-      cors({
-         credentials: true,
-         origin: 'http://localhost:3000',
-      })
-   );
    app.set('trust proxy', 1);
 
    app.use(
@@ -95,7 +88,13 @@ const main = async () => {
       introspection: true,
    });
 
-   apolloServer.applyMiddleware({ app, cors: false });
+   apolloServer.applyMiddleware({
+      app,
+      cors: {
+         credentials: true,
+         origin: 'http://localhost:3000',
+      },
+   });
 
    app.listen(process.env.PORT || 3001, () => {
       console.log(`server started on http://localhost:3001/graphql`);
