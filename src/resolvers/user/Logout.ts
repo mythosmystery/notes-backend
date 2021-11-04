@@ -8,7 +8,7 @@ export class LogoutResolver {
    logout(@Ctx() { req, res }: MyContext) {
       return new Promise(resolve => {
          req.session.destroy(err => {
-            res.clearCookie(__cookie__ ? __cookie__ : 'qid');
+            res.clearCookie('qid');
             if (err) {
                console.log(err);
                resolve(false);

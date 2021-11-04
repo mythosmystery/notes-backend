@@ -78,7 +78,7 @@ const main = async () => {
             secure: true,
             httpOnly: true,
          },
-         name: __cookie__ ? __cookie__ : 'qid',
+         name: 'qid',
          secret: 'Aasdhagsdadjasjdasd',
          resave: false,
          saveUninitialized: false,
