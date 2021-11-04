@@ -16,7 +16,9 @@ import { WriteResolver } from './resolvers/note/Write';
 import { GetNoteResolver } from './resolvers/note/Get';
 import { UpdateNoteResolver } from './resolvers/note/Update';
 import { DeleteNoteResolver } from './resolvers/note/Delete';
-import { __prod__ } from './consts';
+import { __cookie__, __prod__ } from './consts';
+import { MyContext } from './types/MyContext';
+import { LogoutResolver } from './resolvers/user/Logout';
 
 declare module 'express-session' {
    interface SessionData {
@@ -48,6 +50,7 @@ const main = async () => {
          GetNoteResolver,
          UpdateNoteResolver,
          DeleteNoteResolver,
+         LogoutResolver,
       ],
       authChecker: ({ context: { req } }) => {
          if (req.session.userId) {
@@ -75,7 +78,7 @@ const main = async () => {
             secure: true,
             httpOnly: true,
          },
-         name: 'qid',
+         name: __cookie__ ? __cookie__ : 'qid',
          secret: 'Aasdhagsdadjasjdasd',
          resave: false,
          saveUninitialized: false,
@@ -84,7 +87,7 @@ const main = async () => {
 
    const apolloServer = new ApolloServer({
       schema,
-      context: ({ req }: any) => ({ req }),
+      context: ({ req, res }: MyContext) => ({ req, res }),
       playground: true,
       introspection: true,
    });
