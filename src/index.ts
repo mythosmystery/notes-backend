@@ -96,7 +96,7 @@ const main = async () => {
       app,
       cors: {
          credentials: true,
-         origin: __prod__ ? process.env.PROD_FRONTEND_URL : 'http://localhost:3000',
+         origin: process.env.PROD_FRONTEND_URL || 'http://localhost:3000',
       },
    });
 
