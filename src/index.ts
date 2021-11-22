@@ -1,7 +1,4 @@
 import 'reflect-metadata';
-// import session from 'express-session';
-// import connectRedis from 'connect-redis';
-// import { redis } from './redis';
 
 import { ApolloServer } from 'apollo-server-express';
 import Express from 'express';
@@ -65,26 +62,4 @@ const main = async () => {
    });
 };
 
-// const RedisStore = connectRedis(session);
-
-// app.set('trust proxy', 1);
-
-// app.use(
-//    session({
-//       store: new RedisStore({
-//          client: redis as any,
-//          disableTouch: true
-//       }),
-//       cookie: {
-//          maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-//          sameSite: 'none',
-//          secure: true,
-//          httpOnly: true
-//       },
-//       name: 'qid',
-//       secret: 'Aasdhagsdadjasjdasd',
-//       resave: false,
-//       saveUninitialized: false
-//    })
-// );
 main();
