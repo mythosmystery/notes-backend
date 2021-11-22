@@ -1,8 +1,9 @@
-import { Auth, User } from '../../entity/User';
+import { User } from '../../entity/User';
 import { Arg, Mutation, Resolver } from 'type-graphql';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import { __secret__ } from 'src/consts';
+import { __secret__ } from '../../consts';
+import { Auth } from '../../types/AuthGQL';
 
 @Resolver()
 export class LoginResolver {

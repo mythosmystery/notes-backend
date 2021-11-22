@@ -1,8 +1,9 @@
 import { Resolver, Mutation, Arg } from 'type-graphql';
 import { hash } from 'bcryptjs';
-import { Auth, User } from '../../entity/User';
+import { User } from '../../entity/User';
 import { sign } from 'jsonwebtoken';
-import { __secret__ } from 'src/consts';
+import { __secret__ } from '../../consts';
+import { Auth } from '../../types/AuthGQL';
 
 @Resolver()
 export class RegisterResolver {

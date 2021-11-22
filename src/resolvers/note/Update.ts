@@ -1,5 +1,6 @@
 import { Note } from '../../entity/Note';
-import { Arg, Authorized, Field, InputType, Mutation, Resolver } from 'type-graphql';
+import { Arg, Field, InputType, Mutation, Resolver, UseMiddleware } from 'type-graphql';
+import { isAuth } from '../../isAuth';
 
 @InputType()
 class UpdateNoteInput implements Partial<Note> {
@@ -12,7 +13,7 @@ class UpdateNoteInput implements Partial<Note> {
 
 @Resolver()
 export class UpdateNoteResolver {
-   @Authorized()
+   @UseMiddleware(isAuth)
    @Mutation(() => Note)
    async updateNote(@Arg('id') id: string, @Arg('data') newNote: UpdateNoteInput): Promise<Note | undefined> {
       await Note.update({ id }, { ...newNote });

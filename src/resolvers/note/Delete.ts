@@ -1,5 +1,6 @@
 import { Note } from '../../entity/Note';
-import { Arg, Authorized, Field, Mutation, ObjectType, Resolver } from 'type-graphql';
+import { Arg, Field, Mutation, ObjectType, Resolver, UseMiddleware } from 'type-graphql';
+import { isAuth } from '../../isAuth';
 
 @ObjectType()
 class DeleteMessage {
@@ -9,7 +10,7 @@ class DeleteMessage {
 
 @Resolver()
 export class DeleteNoteResolver {
-   @Authorized()
+   @UseMiddleware(isAuth)
    @Mutation(() => DeleteMessage)
    async deleteNote(@Arg('id') id: string): Promise<DeleteMessage> {
       try {

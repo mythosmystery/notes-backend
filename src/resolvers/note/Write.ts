@@ -1,18 +1,23 @@
 import { Note } from '../../entity/Note';
 import { User } from '../../entity/User';
 import { MyContext } from 'src/types/MyContext';
-import { Arg, Authorized, Ctx, Mutation, Resolver } from 'type-graphql';
+import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from 'type-graphql';
+import { isAuth } from '../../isAuth';
 
 @Resolver()
 export class WriteResolver {
-   @Authorized()
+   @UseMiddleware(isAuth)
    @Mutation(() => Note)
-   async writeNote(@Arg('body') body: string, @Arg('title') title: string, @Ctx() ctx: MyContext): Promise<Note> {
-      const user = await User.findOne({ id: ctx.req.session.userId });
+   async writeNote(
+      @Arg('body') body: string,
+      @Arg('title') title: string,
+      @Ctx() { payload }: MyContext
+   ): Promise<Note> {
+      const user = await User.findOne({ id: payload?.userId });
       const note = await Note.create({
          body,
          title,
-         user,
+         user
       }).save();
       return note;
    }
