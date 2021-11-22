@@ -14,7 +14,6 @@ import { UpdateNoteResolver } from './resolvers/note/Update';
 import { WriteResolver } from './resolvers/note/Write';
 import { GetUserResolver } from './resolvers/user/Get';
 import { LoginResolver } from './resolvers/user/Login';
-import { LogoutResolver } from './resolvers/user/Logout';
 import { MeResolver } from './resolvers/user/Me';
 import { RegisterResolver } from './resolvers/user/Register';
 
@@ -41,8 +40,7 @@ const main = async () => {
          WriteResolver,
          GetNoteResolver,
          UpdateNoteResolver,
-         DeleteNoteResolver,
-         LogoutResolver
+         DeleteNoteResolver
       ]
    });
 
