@@ -1,7 +1,8 @@
-import { Resolver, Mutation, Arg, Ctx } from 'type-graphql';
-import bcrypt from 'bcryptjs';
-import { User } from '../../entity/User';
-import { MyContext } from 'src/types/MyContext';
+import { Resolver, Mutation, Arg } from 'type-graphql';
+import { hash } from 'bcryptjs';
+import { Auth, User } from '../../entity/User';
+import { sign } from 'jsonwebtoken';
+import { __secret__ } from 'src/consts';
 
 @Resolver()
 export class RegisterResolver {
@@ -10,17 +11,15 @@ export class RegisterResolver {
       @Arg('firstName') firstName: string,
       @Arg('lastName') lastName: string,
       @Arg('email') email: string,
-      @Arg('password') password: string,
-      @Ctx() ctx: MyContext
-   ): Promise<User> {
-      const hashedPassword = await bcrypt.hash(password, 12);
+      @Arg('password') password: string
+   ): Promise<Auth> {
+      const hashedPassword = await hash(password, 12);
       const user = await User.create({
          firstName,
          lastName,
          email,
-         password: hashedPassword,
+         password: hashedPassword
       }).save();
-      ctx.req.session.userId = user.id;
-      return user;
+      return { token: sign({ userId: user.id }, __secret__, { expiresIn: '15m' }), user };
    }
 }

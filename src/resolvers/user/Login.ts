@@ -1,26 +1,25 @@
-import { User } from '../../entity/User';
-import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
-import bcrypt from 'bcryptjs';
-import { MyContext } from '../../types/MyContext';
+import { Auth, User } from '../../entity/User';
+import { Arg, Mutation, Resolver } from 'type-graphql';
+import { compare } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
+import { __secret__ } from 'src/consts';
 
 @Resolver()
 export class LoginResolver {
-   @Mutation(() => User, { nullable: true })
-   async login(@Arg('email') email: string, @Arg('password') password: string, @Ctx() ctx: MyContext): Promise<User | null> {
+   @Mutation(() => Auth, { nullable: true })
+   async login(@Arg('email') email: string, @Arg('password') password: string): Promise<Auth | null> {
       const user = await User.findOne({ where: { email } });
 
       if (!user) {
-         return null;
+         throw new Error('Could not find user');
       }
 
-      const valid = await bcrypt.compare(password, user.password);
+      const valid = await compare(password, user.password);
 
       if (!valid) {
-         return null;
+         throw new Error('Invalid password');
       }
 
-      ctx.req.session.userId = user.id;
-
-      return user;
+      return { token: sign({ userId: user.id }, __secret__, { expiresIn: '15m' }), user };
    }
 }

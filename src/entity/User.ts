@@ -3,6 +3,15 @@ import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 't
 import { Note } from './Note';
 
 @ObjectType()
+export class Auth {
+   @Field()
+   token: string;
+
+   @Field()
+   user: User;
+}
+
+@ObjectType()
 @Entity()
 export class User extends BaseEntity {
    @Field(() => ID)
