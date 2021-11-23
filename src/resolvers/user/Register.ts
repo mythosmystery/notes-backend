@@ -7,7 +7,7 @@ import { Auth } from '../../types/AuthGQL';
 
 @Resolver()
 export class RegisterResolver {
-   @Mutation(() => User)
+   @Mutation(() => Auth)
    async register(
       @Arg('firstName') firstName: string,
       @Arg('lastName') lastName: string,
