@@ -16,6 +16,7 @@ import { GetUserResolver } from './resolvers/user/Get'
 import { LoginResolver } from './resolvers/user/Login'
 import { MeResolver } from './resolvers/user/Me'
 import { RegisterResolver } from './resolvers/user/Register'
+import cors from 'cors'
 
 const main = async () => {
   if (__prod__) {
@@ -45,6 +46,8 @@ const main = async () => {
   })
 
   const app = Express()
+
+  app.use(cors())
 
   const apolloServer = new ApolloServer({
     schema,
